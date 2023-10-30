@@ -1,0 +1,36 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a [routerLink]="'/'" class="navbar-brand">Educera</a>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" *ngIf="!isLoggedIn()">
+              <a [routerLink]="'/login'"  class="nav-link active" aria-current="page">Login</a>
+            </li>
+            <li class="nav-item active" *ngIf="isLoggedIn()">
+              <a [routerLink]="'/login'" (click)="logout()" class="nav-link active" aria-current="page">Logout</a>
+            </li>
+            <li class="nav-item active">
+              <a [routerLink]="'/courses'" class="nav-link active" aria-current="page">Courses</a>
+            </li>
+            <li class="nav-item active" *ngIf="getUserRole() == 'ADMIN'">
+              <a [routerLink]="'/user-management'" class="nav-link active" aria-current="page">User management</a>
+            </li>
+            <li class="nav-item active" *ngIf="getUserRole() == 'ADMIN'">
+              <a [routerLink]="'/course-management'" class="nav-link active" aria-current="page">Course management</a>
+            </li>
+            <!-- <li class="nav-item active" *ngIf="getUserRole() == 'TEACHER'">
+              <a [routerLink]="'/teacher-courses'" class="nav-link active" aria-current="page">Courses I teach</a>
+            </li>
+            <li class="nav-item active" *ngIf="getUserRole() == 'STUDENT'">
+              <a [routerLink]="'/student-courses'" class="nav-link active" aria-current="page">My courses</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <div class="container pt-3">
+    <router-outlet></router-outlet>
+  </div>

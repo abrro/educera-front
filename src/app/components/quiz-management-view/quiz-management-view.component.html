@@ -1,0 +1,57 @@
+<div class="card" style="width: 40rem;">
+    <div class="card-body">
+      <h2 class="card-title">{{quiz.name}}</h2>
+      <h6 class="card-subtitle mb-2 text-body-secondary"> Start time: {{quiz.startTime}}</h6>
+      <h6 class="card-subtitle mb-2 text-body-secondary"> Accessible until: {{quiz.accessibleUntil}}</h6> 
+      <h6 class="card-subtitle mb-2 text-body-secondary"> Duration: {{quiz.duration}} min.</h6>
+      <h6 class="card-subtitle mb-2 text-body-secondary"> Maximum points: {{quiz.maxPoints}}</h6>
+      <p class="card-text">Rules: {{quiz.rules}}</p>
+      <a [routerLink]="['edit']" type="button" class="btn btn-primary">Edit quiz settings</a>
+    </div>
+</div>
+
+<br>
+<br>
+
+<h3 *ngIf="!questions.length">No questions yet.</h3>
+<button type="button" class="btn btn-primary" (click)="toggleQuestionTypeChoice()">Add new question</button>
+
+<div *ngIf="qTypeChoice">
+  <br>
+  <div class="card" style="width: 18rem;">
+
+    <div *ngFor="let qtype of qTypes, let i = index">
+    <label class="form-check-label" for="qype_{{i}}">
+      <input class = "form-check-input" id="qype_{{i}}" [value]='qtype.alias' type="radio" name="qtypes" [(ngModel)]="qTypeSelected">
+        {{qtype.label}}
+      </label>
+    </div>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button *ngIf="qTypeSelected" type="button" class="btn btn-primary btn-sm" (click)="openQuestionForm()">Create question</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="toggleQuestionTypeChoice()">Cancle</button>
+  </div>
+</div>
+
+  <table *ngIf="questions.length" class="table">
+    <thead>
+        <tr>
+          <th *ngFor="let col of tableColumns" scope="col">{{col}}</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let question of questions, let i = index">
+        <tr>
+            <th *ngIf="question.questionType == 'MULTI_CHOICE'"><a [routerLink]="['edit-cq', question.id]" scope = "row">{{question.title}}</a></th>
+            <th *ngIf="question.questionType == 'SINGLE_CHOICE'"><a [routerLink]="['edit-cq', question.id]" scope = "row">{{question.title}}</a></th>
+            <th *ngIf="question.questionType == 'SHORT_ANSWER'"><a [routerLink]="['edit-saq', question.id]" scope = "row">{{question.title}}</a></th>
+            <th scope="row">{{question.questionType}}</th>
+            <th scope="row"><span>
+              <button type="button" class="btn btn-secondary" (click)="deleteQuestion(question.id, i)">Delete</button>
+            </span></th>
+        </tr>
+    </tbody>
+</table>
+
+
+

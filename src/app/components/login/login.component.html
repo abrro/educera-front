@@ -1,0 +1,39 @@
+<div>
+    <h2>Login</h2>
+  
+    <form class="login-form col-4" [formGroup]="loginForm" (submit)="login()">
+  
+          <div class="form-group">
+            <label class= "formLabel" for="emailInput">Email address</label>
+            <input type="email"
+                class="form-control" 
+                id="emailInput"
+                placeholder="Enter your email..."
+                formControlName = "email"
+                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+          </div>
+          <div *ngIf="submitted && f['email'].errors" class="text-danger">
+            <small *ngIf="f['email'].errors?.['required']">Email is required</small>
+            <small *ngIf="f['email'].errors?.['email']">Must be a well formed email</small>
+          </div>
+            <div class="form-group">
+            <label class= "formLabel" for="passwordInput">Password</label>
+            <input type="password"
+                    class="form-control" 
+                    id="passwordInput" 
+                    placeholder="Enter your password..."
+                    formControlName = "password"
+                    [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+            </div>
+          <div>
+          <div *ngIf="submitted && f['password'].errors" class="text-danger">
+              <small *ngIf="f['password'].errors['required']">Password is required</small>
+          </div>
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </div>
+    </form>
+  
+  
+  
+  
+  </div>

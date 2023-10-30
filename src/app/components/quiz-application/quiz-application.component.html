@@ -1,0 +1,48 @@
+<div *ngIf="questions.length">
+    <p> 
+        Time remaining: {{ timeRemaining$ | async | date: "mm:ss" }}
+    </p>
+
+    <form class="quiz-form">
+    <div *ngFor="let question of questions, let i = index ">
+        
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">{{question.title}}</h6>
+                <h5 class="card-title">{{question.text}}</h5>
+
+                <div *ngIf="question.questionType == 'MULTI_CHOICE'">
+                    <ul class="list-group" *ngFor="let answer of question.questionAnswers, let j = index">
+                        <li class="list-group-item">
+                            <label class="form-check-label" [for]="'check-box'+j">
+                            <input class="form-check-input me-1" type="checkbox" [id]="'check-box'+j" [name]="'check-box'+j"
+                            value=""
+                            (change)="appendSelected(answer.id, i, $event)">
+                            {{j+1 + ")"}} {{answer.answer}}</label>
+                        </li>
+                    </ul>
+                </div>
+                <div *ngIf="question.questionType == 'SINGLE_CHOICE'">
+                        <ul class="list-group" *ngFor="let answer of question.questionAnswers, let k = index">
+                            <li class="list-group-item">
+                                <label class="form-check-label" [for]="'radio'+k">
+                                <input class="form-check-input me-1" type="radio" value="" [id]="'radio'+k" name="radios"
+                                (click)="checkOne(answer.id, i)">
+                                {{k+1 + ")"}} {{answer.answer}}</label>
+                            </li>
+                        </ul>
+                </div>
+                <div *ngIf="question.questionType == 'SHORT_ANSWER'">
+                    <label class="form-check-label" [for]="'saq-input'+i">Response:</label>
+                    <input class="form-control" [name]="'saq-input'+i" type="text" [id]="'saq-input'+i" placeholder="Write response here..."
+                    [(ngModel)]="responses[i].response">
+                </div>
+            </div>
+        </div>
+    
+    </div>
+        
+    <button type="button" class="btn btn-primary" type="submit" (click)="sumbitResponses()">Submit answers</button>
+    </form>
+
+</div>

@@ -1,0 +1,102 @@
+<div>
+    <h2>Choice question form:</h2>
+  
+    <form class="quiz-form" [formGroup]="questionForm">
+  
+        <div class="form-group col-4">
+            <label class= "formLabel" for="titleInput">Question title:</label>
+            <input class="form-control" 
+                id="titleInput"
+                placeholder="Enter question title..."
+                formControlName = "title"
+                [ngClass]="{ 'is-invalid': submitted && f['title'].errors }">
+        </div>
+        <div *ngIf="submitted && f['title'].errors" class="text-danger">
+            <small *ngIf="f['title'].errors?.['required']">Question title is required.</small>
+        </div>
+        
+        <div class="form-group col-6">
+            <label class= "formLabel" for="textInput">Question text:</label>
+            <textarea type="text"
+                class="form-control" 
+                id="textInput"
+                placeholder="Enter queston text..."
+                formControlName = "text"
+                [ngClass]="{ 'is-invalid': submitted && f['text'].errors }"></textarea>
+        </div>
+        <div *ngIf="submitted && f['text'].errors" class="text-danger">
+            <small *ngIf="f['text'].errors['required']">Question body required.</small>
+        </div>
+
+        <div class="form-group col-3">
+            <label class= "formLabel" for="maximumPointsInput">Maximum points:</label>
+            <input type="number"
+                class="form-control" 
+                id="maximumPointsInput"
+                placeholder="Max points..."
+                formControlName = "maximumPoints"
+                [ngClass]="{ 'is-invalid': submitted && f['maximumPoints'].errors }">
+        </div>
+        <div *ngIf="submitted && f['maximumPoints'].errors" class="text-danger">
+            <small *ngIf="f['maximumPoints'].errors['required']">Maximum points have to be set.</small>
+        </div>
+
+        <label class="form-check-label" for="singleTypeRadio">
+            <input type="checkbox" name="singleTypeRadioName" id="singleTypeRadio"
+            [checked]="singleTypeSelected"
+            [(ngModel)]="singleTypeSelected" 
+            [ngModelOptions]="{standalone : true}"
+            (click)="toggleType()">
+            Single correct answer
+        </label>
+
+
+        <br>
+        <h4>Answers:</h4>
+        <ng-container formArrayName="questionAnswers" >
+            <ng-container *ngFor="let answerForm of answers.controls, let i = index">
+            <ng-container [formGroup]="answerForm">
+                <div class="card col-6">
+                <div class="card-body">
+                <h5 class="card-title">Answer {{i + 1}}:</h5>
+                <div class="form-group">
+                    <label class= "formLabel" for="answerText">Answer text:</label>
+                    <input class="form-control" 
+                        id="answerText"
+                        placeholder="Write answer here..."
+                        formControlName = "answer"
+                        [ngClass]="{ 'is-invalid': submitted && answerForm.controls['answer'].errors }">
+                </div>
+                <div *ngIf="submitted && answerForm.controls['answer'].errors" class="text-danger">
+                    <small *ngIf="answerForm.controls['answer'].errors['required']">Answer text is required.</small>
+                </div>
+
+                <label for="percSelect" class="formLabel">Value:</label>
+                <select class="form-select" style="width: 10rem;"
+                    id="percSelect"
+                    formControlName="percentageValue"
+                    [ngClass]="{ 'is-invalid': submitted && answerForm.controls['answer'].errors }">
+                    <option selected></option>
+                    <option *ngFor="let option of percentages" [value]="option"> {{option | percent}}</option>
+                </select>
+                <div *ngIf="submitted && answerForm.controls['percentageValue'].errors" class="text-danger">
+                    <small *ngIf="answerForm.controls['percentageValue'].errors['required']">Percentage value has to be set.</small>
+                </div>
+                <div class="mt-2">
+                    <button (click)="removeAnswer(i)" class="btn btn-primary btn-sm">Remove answer</button>
+                </div>
+                </div>
+            </div>
+            </ng-container>
+            </ng-container>
+        </ng-container>
+        <div class="mt-3">
+            <button (click)="addAnswerForm()" class="btn btn-primary" color="primary">Add another answer</button>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary" (click)="submit()" color="primary">Submit</button>
+        </div>
+    </form>
+
+
+</div>

@@ -1,0 +1,77 @@
+<div>
+    <h2>Quiz form:</h2>
+  
+    <form class="quiz-form" [formGroup]="quizForm" (submit)="submit()">
+  
+        <div class="form-group col-4">
+            <label class= "formLabel" for="nameInput">Quiz name:</label>
+            <input class="form-control" 
+                id="nameInput"
+                placeholder="Enter quiz name..."
+                formControlName = "name"
+                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+        </div>
+        <div *ngIf="submitted && f['name'].errors" class="text-danger">
+            <small *ngIf="f['name'].errors?.['required']">Quiz name is required.</small>
+        </div>
+        
+        <div class="form-group col-6">
+            <label class= "formLabel" for="rulesInput">Quiz rules:</label>
+            <textarea type="text"
+                class="form-control" 
+                id="rulesInput"
+                placeholder="Enter quiz rules..."
+                formControlName = "rules"
+                [ngClass]="{ 'is-invalid': submitted && f['rules'].errors }"></textarea>
+        </div>
+        <div *ngIf="submitted && f['rules'].errors" class="text-danger">
+            <small *ngIf="f['rules'].errors['required']">Quiz rules must be explained.</small>
+        </div>
+
+        <div class="form-group col-3">
+            <label class= "formLabel" for="startTimeInput">Start time:</label>
+            <input type="datetime-local"
+                class="form-control" 
+                id="startTimeInput"
+                formControlName = "startTime"
+                [ngClass]="{ 'is-invalid': submitted && f['startTime'].errors }">
+        </div>
+        <div *ngIf="submitted && f['startTime'].errors" class="text-danger">
+            <small *ngIf="f['startTime'].errors['required']">Start time required.</small>
+        </div>
+
+        <div class="form-group col-3">
+            <label class= "formLabel" for="accessibleUntilInput">Accessible until:</label>
+            <input type="datetime-local"
+                class="form-control" 
+                id="accessibleUntilInput"
+                formControlName = "accessibleUntil"
+                [ngClass]="{ 'is-invalid': submitted && f['accessibleUntil'].errors }">
+        </div>
+        <div *ngIf="submitted && f['accessibleUntil'].errors" class="text-danger">
+            <small *ngIf="f['accessibleUntil'].errors['required']">Accessible until time required.</small>
+        </div>
+
+        <div class="form-outline">
+            <label class="formLabel" for="durationInput"> Set duration (minutes):</label>
+            <div class="col-2">
+                <input type="number"
+                    min="1" 
+                    class="form-control" 
+                    id="durationInput" 
+                    placeholder="min"
+                    formControlName="duration"/>
+            </div>
+            <div *ngIf="submitted && f['duration'].errors" class="text-danger">
+                <small *ngIf="f['duration'].errors['required']">Duration is required.</small>
+            </div>
+        </div>
+
+        <br>
+        <button class="btn btn-primary" type="submit" color="primary">Submit</button>
+    </form>
+
+
+</div>
+
+

@@ -1,0 +1,37 @@
+<div>
+    <div class="card" style="width: 25rem;">
+        <div class="card-body" >
+            <h2 class="card-title">{{course.name}}</h2> 
+            <p class="card-text">{{course.description}}</p>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <button *ngIf="userRole =='STUDENT' && !studentEnrolled" type="button" class="btn btn-primary" (click)="enrollStudent()">Enroll on this course</button>
+
+      <a [routerLink]="['quiz/create']" *ngIf="teachersCourse" type="button" class="btn btn-primary">Create new quiz</a>
+
+      <br>
+      <br>
+
+      <h3> Quizzes </h3>
+
+      <table *ngIf="quizzes.length" class="table">
+            <thead>
+                <tr>
+                  <th *ngFor="let col of tableColumns" scope="col">{{col}}</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let quiz of quizzes">
+                <tr>
+                    <th *ngIf="teachersCourse"><a [routerLink]="['quiz', quiz.id]" class = "row">{{quiz.name}}</a></th>
+                    <th *ngIf="!teachersCourse"><a [routerLink]="['quiz-info', quiz.id]" class = "row">{{quiz.name}}</a></th>
+                    <th scope="row">{{quiz.startTime}}</th>
+                    <th scope="row">{{quiz.accessibleUntil}}</th>
+                </tr>
+            </tbody>
+      </table>
+      <!-- <p *ngIf="quizzes.length == 0"> No quizzes here.</p> -->
+
+</div>

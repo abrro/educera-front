@@ -1,0 +1,17 @@
+<div *ngIf="quiz" class="card">
+    <div class="card-body">
+        <h3 class="card-title">Quiz: {{quiz.name}}</h3>
+        <small>Carefully read the following quiz rules:</small>
+        <p>{{quiz.rules}}</p>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Starts on: {{quiz.startTime}}</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Accesible until: {{quiz.accessibleUntil}}</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Duration (min): {{quiz.duration}}</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Max points: {{quiz.maxPoints}}</h6>
+        <div *ngIf="userRole == 'STUDENT'" class="col-4 mt-2">
+            <button (click)="startQuiz()" type=button class="btn btn-primary">Enter quiz</button>
+        </div>
+        <div *ngIf="userRole == 'STUDENT'" class="col-4 mt-2">
+            <button (click)="getResults()" type=button class="btn btn-primary">Get results</button>
+        </div>
+    </div>
+</div>
